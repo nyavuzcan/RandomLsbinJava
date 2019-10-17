@@ -2,14 +2,15 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Main {
 	
-	public static void main(String[] args) {
+	public static String basla(String key,String sifrenmis,String path) {
 		
-		String key="nevzat";
-		String sifrenmis="321b7d9f760e98972c830fd02384d1b5ceff8cacfda1e00b3b247102085ecedc";
-		 File file = new File("D:\\NY-Files\\Desktop\\denemx.BMP");
+		//String key="test";
+		//String sifrenmis="9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08";
+		 File file = new File(path);
 	
 			String [] sifredizi=sifrenmis.split("");
 		
@@ -19,28 +20,35 @@ public class Main {
 	        byte[] bArray = readFileToByteArray(file);
 	        
 	    	int count=0;
+	    	int i=0;
 			while(true) {
 			
 			
-			for(int i=0;i<sifrenmis.length();i++) {
+			
 				  
 				  char a=sifredizi[i].charAt(0);
 				int ascii=(int)a;
 				System.out.println(sifredizi[i]+"Degerler"+ascii);
-				
+				if(i==sifredizi.length-1) {
+	        		System.out.println("Ý SIFIRLANIYOR ***");
+	        		i=0;
+	        		continue;
+	        	}
 				while(true) {
-				
-				if(kullanilan.contains(ascii)||(ascii<100)) {// headerdan degil pixellerden yazacak
+					if(ascii>40000) {
+						ascii/=2;
+						ascii--;
+						System.out.println("Sayý SINIRI GECTÝ");
+						continue;
+					}
+				if(kullanilan.contains(ascii)||(ascii<200)) {// headerdan degil pixellerden yazacak
 
 					System.out.println(ascii+"Kullanýldý Tekrar Döngü Basladý");
 				
-
-				
 					
 					ascii*=2;
-					
 				
-					
+				
 					continue;
 				}
 				System.out.println(ascii+"Cikildi");
@@ -52,26 +60,23 @@ public class Main {
 				 kullanilan.add((int) ascii);
 				 System.out.println(kullanilan.get(i));
 				 
-				 if((bArray[kullanilan.get(i)]%2)==0) {
-					System.out.println("deneme");
+				 if((bArray[ascii]%2)==0) {
+					System.out.println("Alýnmasi gerekn 0: "+kullanilan.get(count));
 					degerler.add("0");
 				 }
 					
 				 else {
+						System.out.println("Alýnmasi gerekn 1: "+kullanilan.get(count));
 					degerler.add("1");
 				 }
 				
 		        	count++;
-		        	
-		        	if(count==64) {
-		    			
-		    		//	System.out.println("ÇIKIIIÞ");
-		    			break;
-		    		}
-		        }
-			if(count==64) {
+		        	i++;
+		        
+		      
+			if(count==160) {
 				
-			//System.out.println("ÇIKIIIÞ");
+			System.out.println("ÇIKIIIÞ");
 				break;
 			}
 	    		
@@ -82,7 +87,7 @@ public class Main {
 				sonstr+=deger;
 				
 			}
-	        System.out.println(sonstr);
+	       return  sonstr;
 	       
 	}
 	 private static byte[] readFileToByteArray(File file){
@@ -100,4 +105,5 @@ public class Main {
 	        }
 	        return bArray;
 	    }
+
 }

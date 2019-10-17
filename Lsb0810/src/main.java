@@ -7,6 +7,7 @@ import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 
 import javax.imageio.ImageIO;
 
@@ -15,38 +16,23 @@ import javax.imageio.ImageIO;
 
 public class main {
 
-	public static void main(String[] args) {
-
+	
+	
+	public void runm(String filepath,String newpath,String key,String bitler,String message,String sifrenmis) {
+		
 		Md5 md=new Md5();
 	
 		
 		
-		 File file = new File("D:\\NY-Files\\Desktop\\MARBLES.BMP");
+		 File file = new File(filepath);
 	        
 	        // Using java.io.FileInputStream
 	        byte[] bArray = readFileToByteArray(file);
-	        
-	    	md.basla(bArray);
+	        md.basla(bArray, key, sifrenmis, message, bitler);
+	    	//md.basla(bArray);
 	    
 	    	
-	        //for(int y=0;y<66;y++)
-				//System.out.println(bArray[y]);
-	      //  System.out.println(bArray.length);
-	     //40byte HEADER
-	      /*  for(int i=40;i<189954;i++) {
-	        	if(tekcift(bArray[i])==0) {
-	        		bArray[i]+=4;
-	        	}
-	        	else {
-	        		bArray[i]-=4;
-	        	}
-	        	
-	        }*/
-	               
-	        //displaying content of byte array
-	      /*  for (int i = 0; i < bArray.length; i++){
-	           System.out.print((char) bArray[i]);
-	        }  */
+	        
 	        
 	        BufferedImage image = null;
 			try {
@@ -57,16 +43,16 @@ public class main {
 				e1.printStackTrace();
 			}
 	        try {
-				ImageIO.write(image, "BMP", new File("D:\\NY-Files\\Desktop\\denemx.BMP"));
+				ImageIO.write(image, "BMP", new File("D:\\NY-Files\\Desktop\\"+newpath+".BMP"));
 				
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 	        
-	        DosyayaEkle(toBitString(bArray));
+	       
 		
-	    }
+	}
 	//DOSYALARI BYTE SEKLÝNDE SORUNSUZ OKUDUK.
 	 private static byte[] readFileToByteArray(File file){
 	        FileInputStream fis = null;
@@ -105,20 +91,7 @@ public class main {
 		    return String.valueOf(bits);
 		  }
 	  
-	  // DOSYAYA VERÝ EKLEME TXT FORMATI
-	  private static void DosyayaEkle(String metin){
-          try{
-                File dosya = new File("D:\\NY-Files\\Desktop\\xcx.txt");
-                FileWriter yazici = new FileWriter(dosya,true);
-                BufferedWriter yaz = new BufferedWriter(yazici);
-                yaz.write(metin);
-                yaz.close();
-                System.out.println("Ekleme Ýþlemi Baþarýlý");
-          }
-          catch (Exception hata){
-                hata.printStackTrace();
-          }
-    }
+	
 	  private static int tekcift(Byte sayi) {
 		  
 		  if ((sayi%2)==0) return 0;
@@ -128,5 +101,8 @@ public class main {
 			  
 		 
 	  }
+	
+	
+
 
 }
