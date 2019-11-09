@@ -6,7 +6,7 @@ import java.util.Random;
 public class Md5 {
 	
 	
-	public static void basla( byte[] bArray,String key,String sifrenmis, String sifrelenecek,String bitler) {
+	public static void basla( byte[] bArray,String key,String sifrenmis, String sifrelenecek,String bitler,int width,int height) {
 		//String key="testSHA256";
 		//String sifrenmis="321b7d9f760e98972c830fd02384d1b5ceff8cacfda1e00b3b247102085ecedc";
 		
@@ -19,10 +19,14 @@ public class Md5 {
 		String [] bitdizi=bitler.split("");
 		ArrayList<Integer> kullanilan=new ArrayList<Integer>();
 		
+		Entropy ent=new Entropy(bArray);
 		
+		
+		 int degisen=0;
 		int kalanbitsayisi=bitdizi.length;
 		int count=0;
 		int i=0;
+	    byte firstbyte=0;
 		
 		while(true) {
 		
@@ -41,6 +45,8 @@ public class Md5 {
         	}
 		
 			while(true) {
+				
+				
 			if(ascii>40000) {
 				ascii/=2;
 				ascii--;
@@ -62,7 +68,7 @@ public class Md5 {
 			break; //KULLANILACAK ÝNDEX BULUNDU WHILEDAN CIK
 			}
 			
-			
+		
 		
 			 kullanilan.add((int) ascii);
 			 System.out.println("EKLENEN "+ascii);
@@ -71,6 +77,7 @@ public class Md5 {
 			 System.out.println("SAYÝMÝZ: "+xa);
 	        	if((xa==0)&& (tekcift(bArray[ascii] )==0) ) {
 	        		System.out.println("Sayý 0 ---> Kolon 0 Býraktýk");
+	        		
 	        	}
 	        	
 	        	else if((xa==0)&&(tekcift(bArray[ ascii ] )!=0)) {
@@ -78,6 +85,7 @@ public class Md5 {
 	        		
 	        		
 	        		System.out.println("Sayý 0 ---> Kolon: 1  1 Azalttýk");
+	        		degisen++;
 	        	}
 	        	
 	        
@@ -90,6 +98,7 @@ public class Md5 {
 	        		bArray[ascii]+=1;
 	        	
 	        		System.out.println("Sayý 1 ---> Sayý 0 1 Arttýrdýk");
+	        		degisen++;
 	        	}
 	        	
 	        	kalanbitsayisi--;
@@ -121,7 +130,9 @@ public class Md5 {
 		//for(int z=0;z<kullanilan.size();z++) {
 		//	System.out.println(kullanilan.get(z));
 	//	}
-
+		System.out.println(degisen);
+			MeansSqueareError mse=new MeansSqueareError(height, width,degisen);
+			PayloadCapacity py=new PayloadCapacity(height,width,bitdizi.length);
 	}
   private static int tekcift(Byte sayi) {
 		  

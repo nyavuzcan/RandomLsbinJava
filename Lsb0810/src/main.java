@@ -22,13 +22,22 @@ public class main {
 		
 		Md5 md=new Md5();
 	
-		
-		
+		 int width = 0 ;
+		 int height =0;
 		 File file = new File(filepath);
-	        
+		 BufferedImage bimg;
+		try {
+			bimg = ImageIO.read(file);
+		      width   = bimg.getWidth();
+			    height     = bimg.getHeight();
+		} catch (IOException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		
 	        // Using java.io.FileInputStream
 	        byte[] bArray = readFileToByteArray(file);
-	        md.basla(bArray, key, sifrenmis, message, bitler);
+	        md.basla(bArray, key, sifrenmis, message, bitler,width,height);
 	    	//md.basla(bArray);
 	    
 	    	
